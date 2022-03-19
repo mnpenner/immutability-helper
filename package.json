@@ -1,6 +1,6 @@
 {
-  "name": "immutability-helper",
-  "version": "3.1.1",
+  "name": "immutability-helper2",
+  "version": "3.1.2",
   "description": "mutate a copy of data without changing the original source",
   "main": "index.js",
   "typings": "index.d.ts",
@@ -29,10 +29,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
+        "branches": 95,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
       }
     }
   },
@@ -40,6 +40,13 @@
     "immutability"
   ],
   "author": "Moshe Kolodny",
+  "contributors": [
+    {
+      "name": "Mark Penner",
+      "email": "npm@mpen.ca",
+      "url": "https://mpen.ca"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@types/invariant": "^2.2.29",
@@ -53,12 +60,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kolodny/immutability-helper.git"
+    "url": "git+https://github.com/mnpenner/immutability-helper.git"
   },
   "bugs": {
-    "url": "https://github.com/kolodny/immutability-helper/issues"
+    "url": "https://github.com/mnpenner/immutability-helper/issues"
   },
-  "homepage": "https://github.com/kolodny/immutability-helper#readme",
+  "homepage": "https://github.com/mnpenner/immutability-helper#readme",
   "engines": {
     "node": ">=8"
   }

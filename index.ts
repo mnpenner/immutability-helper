@@ -152,7 +152,11 @@ const defaultCommands = {
   },
   $splice(value: any, nextObject: any, spec: any, originalObject: any) {
     invariantSplices(nextObject, spec);
-    value.forEach((args: any) => {
+    if (!value.length) {
+      return nextObject;
+    }
+    const sortedValue = Array.prototype.slice.call(value).sort((a, b) => b[0] - a[0]);
+    sortedValue.forEach((args) => {
       invariantSplice(args);
       if (nextObject === originalObject && args.length) {
         nextObject = copy(originalObject);

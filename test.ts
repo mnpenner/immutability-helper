@@ -84,6 +84,12 @@ describe('immutability-helper module', () => {
       expect(update([1, 4, 3], {$splice: [[1, 1, 2]]})).toEqual([1, 2, 3]);
       expect(update([5, 4, 9], {$splice: [[1, 1, 6, 7, 8]]})).toEqual([5, 6, 7, 8, 9]);
     });
+    it('works when indices are out of order', () => {
+      // https://github.com/kolodny/immutability-helper/issues/12
+      expect(update([0, 1, 2, 3, 4, 5], {$splice: [[1, 1], [3, 1]]})).toEqual([0, 2, 4, 5]);
+      expect(update([0, 1, 2, 3, 4, 5], {$splice: [[3, 1], [1, 1]]})).toEqual([0, 2, 4, 5]);
+      expect(update([0, 1, 2, 3, 4, 5], {$splice: [[3, 2, 7, 10], [1, 1, 8], [2, 1, 9]]})).toEqual([0, 8, 9, 7, 10, 5]);
+    });
     it('does not mutate the original object', () => {
       const obj = Object.freeze([1, 4, 3]);
       expect(() => update(obj, {$splice: [[1, 1, 2]]})).not.toThrow();
@@ -106,6 +112,7 @@ describe('immutability-helper module', () => {
     it('keeps reference equality when possible', () => {
       const original = ['x'];
       expect(update(original, {$splice: [[]]} as any)).toBe(original);
+      expect(update(original, {$splice: []} as any)).toBe(original);
     });
   });
 
@@ -641,23 +648,23 @@ describe('update', () => {
 });
 
 describe('works with readonly arrays', () => {
-  interface Thing {
+  interface IThing {
     bar: {
       foo: ReadonlyArray<{ baz: number }>;
     };
   }
 
-  const a: Thing = {
-    bar: { foo: [ {baz: 1} ] }
+  const a: IThing = {
+    bar: { foo: [ {baz: 1} ] },
   };
-  const b: Thing = {
-    bar: { foo: [ {baz: 2} ] }
+  const b: IThing = {
+    bar: { foo: [ {baz: 2} ] },
   };
   expect(update(a, {
     bar: {
-      foo: { $push: b.bar.foo }
-    }
+      foo: { $push: b.bar.foo },
+    },
   })).toEqual({
-    bar: { foo: [{ baz: 1 }, { baz: 2 }]}
+    bar: { foo: [{ baz: 1 }, { baz: 2 }]},
   });
 });
